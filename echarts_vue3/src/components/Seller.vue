@@ -13,6 +13,7 @@ import { get } from '../utils/request'
 export default {
   name: 'Seller',
   setup () {
+    const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj) // 解包proxy 否则与echarts兼容性不好
     const sellerDom = ref(null)
     const chartInstance = ref(null)
     const allData = ref(null) // 服务器返回的原始数
@@ -95,7 +96,7 @@ export default {
           }
         }]
       }
-      chartInstance.value.setOption(initOption)
+      unwarp(chartInstance.value).setOption(initOption)
       chartInstance.value.on('mouseover', () => {
         clearInterval(timerId.value)
       })
@@ -127,7 +128,7 @@ export default {
           data: sellerValues
         }]
       }
-      chartInstance.value.setOption(dataoption)
+      unwarp(chartInstance.value).setOption(dataoption)
     }
     // setInterval
     function startInterval () {
@@ -165,7 +166,7 @@ export default {
           }
         }]
       }
-      chartInstance.value.setOption(adapterOption)
+      unwarp(chartInstance.value).setOption(adapterOption)
       chartInstance.value.resize()
     }
 
