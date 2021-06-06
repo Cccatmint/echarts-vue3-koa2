@@ -45,12 +45,16 @@ export default {
       chartInstance.value = echarts.init(mapDom.value, null)
       // map click addEventListener
       chartInstance.value.on('click', async (e) => {
-        // console.log(e.name)
         const provinceInfo = getProvinceMapInfo(e.name) // provinceInfo = { key: 'hunan', path: 'hunan'}
         // 获取对应点击省份的地图矢量数据
-        const provinceMapData = await getProvinceMapJson(provinceInfo.key)
+        try {
+          const provinceMapData = await getProvinceMapJson(provinceInfo.key)
+          echarts.registerMap(provinceInfo.key, provinceMapData)
+        } catch (error) {
+          // console.log(error) 捕获控制台因为没有更深层的地图而出现的错误，不显示
+          return
+        }
         // 注册地图
-        echarts.registerMap(provinceInfo.key, provinceMapData)
         // 配置为省份地图
         const changeOption = {
           geo: {
