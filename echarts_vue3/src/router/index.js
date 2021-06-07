@@ -34,6 +34,11 @@ const routes = [
     path: '/hotpage',
     name: 'HotPage',
     component: () => import(/* webpackChunkName: "HotPage" */ '../views/HotPage.vue')
+  },
+  {
+    path: '/stockpage',
+    name: 'StockPage',
+    component: () => import(/* webpackChunkName: "StockPage" */ '../views/StockPage.vue')
   }
 ]
 

@@ -59,9 +59,10 @@ export default {
         series: [
           {
             type: 'pie',
-            radius: ['40%', '70%'],
+            radius: ['20%', '60%'],
+            avoidLabelOverlap: false,
             label: {
-              fontSize: 50,
+              // fontSize: '20%',
               show: false,
               position: 'center'
             },
@@ -69,7 +70,8 @@ export default {
             emphasis: {
               label: {
                 show: true,
-                fontWeight: 'blod'
+                fontSize: 20,
+                fontWeight: 'bold'
               },
               labelLine: {
                 show: false
