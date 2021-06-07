@@ -24,6 +24,11 @@ const routes = [
     path: '/mappage',
     name: 'MapPage',
     component: () => import(/* webpackChunkName: "MapPage" */ '../views/MapPage.vue')
+  },
+  {
+    path: '/rankpage',
+    name: 'RankPage',
+    component: () => import(/* webpackChunkName: "RankPage" */ '../views/RankPage.vue')
   }
 ]
 
