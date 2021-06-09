@@ -1,4 +1,5 @@
 <!-- 库存销量图 -->
+
 <template>
   <div class="com-container">
     <div class="com-chart" ref="stockDom"></div>
@@ -11,6 +12,7 @@ import * as echarts from 'echarts'
 import { get } from '../utils/request'
 export default {
   name: 'Stock',
+
   setup () {
     const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj) // 解包proxy 否则与echarts兼容性不好
     const stockDom = ref(null)
@@ -115,6 +117,7 @@ export default {
       const dataOption = {
         series: seriesArr
       }
+
       unwarp(chartInstance.value).setOption(dataOption)
     }
 
@@ -134,6 +137,7 @@ export default {
           { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } }
         ]
       }
+
       unwarp(chartInstance.value).setOption(adapterOption)
       chartInstance.value.resize()
     }
