@@ -7,6 +7,10 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
 
+const websocket_service = require('./websocket/websocket_service')
+
+websocket_service.listen()
+
 // my_middleware
 const reponse_duration = require('./src/middleware/response_duration')
 const reponse_data = require('./src/middleware/response_data')

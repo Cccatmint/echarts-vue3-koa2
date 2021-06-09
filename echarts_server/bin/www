@@ -4,9 +4,7 @@
  * Module dependencies.
  */
 
-const websocket_service = require('../websocket/websocket_service')
 
-websocket_service.listen()
 
 var app = require('../app');
 var debug = require('debug')('demo:server');

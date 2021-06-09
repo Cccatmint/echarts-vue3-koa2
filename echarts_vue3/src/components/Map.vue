@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, inject } from 'vue'
 import * as echarts from 'echarts'
-import { get } from '../utils/request'
+// import { get } from '../utils/request'
 import { getChinaMapJson, getProvinceMapJson } from '../utils/getMapJson'
 import { getProvinceMapInfo } from '../utils/map_utils'
 
@@ -22,6 +22,10 @@ const useGetChinaMapEffect = (mapData) => {
 export default {
   name: 'Map',
   setup () {
+    // 获取socket实例
+    const SocketServiceInstance = inject('SocketServiceInstance')
+    // 注册回调函数
+    SocketServiceInstance.registerCallBack('mapData', getData)
     const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj) // 解包proxy 否则与echarts兼容性不好
     const mapDom = ref(null)
     const chartInstance = ref(null)
@@ -41,8 +45,8 @@ export default {
       unwarp(chartInstance.value).setOption(revertOption)
     }
     async function initChart () {
-      await getChinaMap()
       chartInstance.value = echarts.init(mapDom.value, null)
+      await getChinaMap()
       // map click addEventListener
       chartInstance.value.on('click', async (e) => {
         const provinceInfo = getProvinceMapInfo(e.name) // provinceInfo = { key: 'hunan', path: 'hunan'}
@@ -88,8 +92,9 @@ export default {
       unwarp(chartInstance.value).setOption(initOption)
     }
 
-    async function getData () {
-      const { data } = await get('/api/data/map')
+    function getData (data) {
+    // async function getData () {
+      // const { data } = await get('/api/data/map')
       allData.value = data
       updateChart()
     }
@@ -118,6 +123,7 @@ export default {
           data: legendArr
         }
       }
+      // unwarp(chartInstance.value).setOption(dataOption)
       unwarp(chartInstance.value).setOption(dataOption)
     }
 
@@ -144,7 +150,13 @@ export default {
 
     onMounted(async () => {
       initChart()
-      getData()
+      // getData()
+      SocketServiceInstance.send({
+        action: 'getData',
+        socketType: 'mapData',
+        chartName: 'map',
+        value: ''
+      })
       window.addEventListener('resize', screenAdapter)
       setTimeout(() => {
         screenAdapter()
@@ -153,6 +165,7 @@ export default {
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', screenAdapter)
+      SocketServiceInstance.unRegisterCallBack('mapData')
     })
 
     return {

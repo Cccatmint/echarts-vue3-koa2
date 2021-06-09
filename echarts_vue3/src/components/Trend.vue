@@ -17,12 +17,16 @@
 </template>
 
 <script>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, inject } from 'vue'
 import * as echarts from 'echarts'
-import { get } from '../utils/request'
+// import { get } from '../utils/request'
 export default {
   name: 'Trend',
   setup () {
+    // 获取socket实例
+    const SocketServiceInstance = inject('SocketServiceInstance')
+    // 注册回调函数
+    SocketServiceInstance.registerCallBack('trendData', getData)
     const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj) // 解包proxy 否则与echarts兼容性不好
     const trendDom = ref(null)
     const chartInstance = ref(null)
@@ -86,8 +90,9 @@ export default {
       unwarp(chartInstance.value).setOption(initOption)
     }
 
-    async function getData () {
-      const { data } = await get('/api/data/trend')
+    function getData (data) {
+    // async function getData () {
+    //   const { data } = await get('/api/data/trend')
       allData.value = data
       updateChart()
     }
@@ -177,7 +182,13 @@ export default {
 
     onMounted(() => {
       initChart()
-      getData()
+      // getData()
+      SocketServiceInstance.send({
+        action: 'getData',
+        socketType: 'trendData',
+        chartName: 'trend',
+        value: ''
+      })
       window.addEventListener('resize', screenAdapter)
       setTimeout(() => {
         screenAdapter()
@@ -186,6 +197,7 @@ export default {
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', screenAdapter)
+      SocketServiceInstance.unRegisterCallBack('trendData')
     })
 
     return {

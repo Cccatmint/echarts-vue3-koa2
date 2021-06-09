@@ -9,12 +9,16 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, inject } from 'vue'
 import * as echarts from 'echarts'
-import { get } from '../utils/request'
+// import { get } from '../utils/request'
 export default {
   name: 'Hot',
   setup () {
+    // 获取socket实例
+    const SocketServiceInstance = inject('SocketServiceInstance')
+    // 注册回调函数
+    SocketServiceInstance.registerCallBack('hotproductData', getData)
     const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj) // 解包proxy 否则与echarts兼容性不好
     const hotDom = ref(null)
     const chartInstance = ref(null)
@@ -83,9 +87,9 @@ export default {
       unwarp(chartInstance.value).setOption(initOption)
     }
 
-    async function getData () {
-      const { data } = await get('/api/data/hotproduct')
-      console.log(data)
+    function getData (data) {
+    // async function getData () {
+      // const { data } = await get('/api/data/hotproduct')
       // data = [{name: 'xx', children: [{name: 'yy'},{},{}]},{},{}]
       allData.value = data
       updateChart()
@@ -157,7 +161,13 @@ export default {
 
     onMounted(() => {
       initChart()
-      getData()
+      // getData()
+      SocketServiceInstance.send({
+        action: 'getData',
+        socketType: 'hotproductData',
+        chartName: 'hotproduct',
+        value: ''
+      })
       window.addEventListener('resize', screenAdapter)
       setTimeout(() => {
         screenAdapter()
@@ -166,6 +176,7 @@ export default {
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', screenAdapter)
+      SocketServiceInstance.unRegisterCallBack('hotproductData')
     })
 
     return {

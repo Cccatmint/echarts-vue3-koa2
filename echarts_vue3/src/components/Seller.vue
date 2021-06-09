@@ -6,13 +6,18 @@
 </template>
 
 <script>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { inject, onBeforeUnmount, onMounted, ref } from 'vue'
 import * as echarts from 'echarts'
-import { get } from '../utils/request'
+// import { get } from '../utils/request'
 
 export default {
   name: 'Seller',
   setup () {
+    // 获取socket实例
+    const SocketServiceInstance = inject('SocketServiceInstance')
+    // 注册回调函数
+    SocketServiceInstance.registerCallBack('sellerData', getData)
+
     const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj) // 解包proxy 否则与echarts兼容性不好
     const sellerDom = ref(null)
     const chartInstance = ref(null)
@@ -72,8 +77,6 @@ export default {
         series: [{
           type: 'bar',
           itemStyle: {
-            // barWidth: 66,
-            // borderRadius: [0, 33, 33, 0],
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
               {
                 offset: 0,
@@ -105,14 +108,16 @@ export default {
       })
     }
     // getData
-    const getData = async () => {
-      const { data } = await get('/api/data/seller')
+    function getData (data) {
+      // async function getData () {
+      // const { data } = await get('/api/data/seller')
       allData.value = data
       allData.value.sort((a, b) => { return a.value - b.value }) // 排序
 
       totalPage.value = allData.value.length % 5 === 0 ? allData.value.length / 5 : allData.value / 5 + 1
       updateChart()
     }
+
     // updateChart
     function updateChart () {
       const start = (currentPage.value - 1) * 5
@@ -173,7 +178,14 @@ export default {
     // onMounted
     onMounted(() => {
       initChart()
-      getData()
+      // getData()
+      // 发送数据给服务器请求数据
+      SocketServiceInstance.send({
+        action: 'getData',
+        socketType: 'sellerData',
+        chartName: 'seller',
+        value: ''
+      })
       startInterval()
       window.addEventListener('resize', sreenAdapter)
       setTimeout(() => {
@@ -185,6 +197,8 @@ export default {
     onBeforeUnmount(() => {
       clearInterval(timerId.value)
       window.removeEventListener('resize', sreenAdapter)
+      // socket 回调函数的取消
+      SocketServiceInstance.unRegisterCallBack('sellerData')
     })
     return {
       sellerDom

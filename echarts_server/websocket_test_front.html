@@ -1,0 +1,58 @@
+<!-- 测试用文件
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>websocket前端测试文件</title>
+</head>
+<body>
+  <button id="link">连接</button>
+  <button id="close">断开</button>
+  <button id="send">发送</button>
+</body>
+<script>
+  const linkbtn = document.querySelector('#link')
+  const closebtn = document.querySelector('#close')
+  const sendbtn = document.querySelector('#send')
+  
+  let Mywebsocket = null
+  
+
+
+  linkbtn.addEventListener('click', () => {
+    Mywebsocket = new WebSocket('ws://localhost:4001')
+    Mywebsocket.onerror = function() {console.log('websocket 连接出错')}
+    Mywebsocket.onopen =function() {console.log('websocket 连接成功')}
+    Mywebsocket.onclose = function() {console.log('websocket 断开')}
+
+ 
+
+  closebtn.addEventListener('click', function()  {
+    Mywebsocket.close()
+  }
+  )
+  
+  sendbtn.addEventListener('click', function()  {
+    Mywebsocket.send(JSON.stringify('????'))
+    // console.log('fasong')
+    // Mywebsocket.send(JSON.stringify({
+    //   action: 'getData',
+    //   socketType: 'trendData',
+    //   chartName: 'trend',
+    //   value: ''
+    // }))
+  })
+
+  Mywebsocket.onmessage = function(msg)  {
+    console.log(msg)}
+  }
+  )
+
+  
+  
+</script>
+</html> -->

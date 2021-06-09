@@ -6,12 +6,16 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, reactive } from 'vue'
+import { ref, onMounted, onBeforeUnmount, reactive, inject } from 'vue'
 import * as echarts from 'echarts'
-import { get } from '../utils/request'
+// import { get } from '../utils/request'
 export default {
   name: 'Rank',
   setup () {
+    // 获取socket实例
+    const SocketServiceInstance = inject('SocketServiceInstance')
+    // 注册回调函数
+    SocketServiceInstance.registerCallBack('rankData', getData)
     const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj) // 解包proxy 否则与echarts兼容性不好
     const rankDom = ref(null)
     const chartInstance = ref(null)
@@ -56,8 +60,9 @@ export default {
       unwarp(chartInstance.value).on('mouseout', () => { startInterval() })
     }
 
-    async function getData () {
-      const { data } = await get('/api/data/rank')
+    // async function getData () {
+    function getData (data) {
+      // const { data } = await get('/api/data/rank')
       allData.value = data
       // data = [{ name: 'xx省', value: 230 }, ... ]
       allData.value.sort((a, b) => {
@@ -155,7 +160,13 @@ export default {
 
     onMounted(() => {
       initChart()
-      getData()
+      // getData()
+      SocketServiceInstance.send({
+        action: 'getData',
+        socketType: 'rankData',
+        chartName: 'rank',
+        value: ''
+      })
       window.addEventListener('resize', screenAdapter)
       setTimeout(() => {
         screenAdapter()
@@ -165,6 +176,8 @@ export default {
     onBeforeUnmount(() => {
       window.removeEventListener('resize', screenAdapter)
       clearInterval(zoomArr.timerId)
+      // socket 回调函数的取消
+      SocketServiceInstance.unRegisterCallBack('rankData')
     })
 
     return {
