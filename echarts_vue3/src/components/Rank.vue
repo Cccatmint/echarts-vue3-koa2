@@ -28,7 +28,7 @@ export default {
       chartInstance.value = echarts.init(rankDom.value, null)
       const initOption = {
         title: {
-          text: '图标标题',
+          text: '商家销量趋势',
           top: 20,
           left: 20
         },

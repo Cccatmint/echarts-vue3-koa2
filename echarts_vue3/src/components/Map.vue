@@ -66,7 +66,7 @@ export default {
       echarts.registerMap('china', mapData.value)
       const initOption = {
         title: {
-          text: '商家分布',
+          text: '商家分布图',
           left: 20,
           top: 20
         },
