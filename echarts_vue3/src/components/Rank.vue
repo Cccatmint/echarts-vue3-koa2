@@ -1,4 +1,4 @@
-<!-- 商家销量趋势折线图 -->
+<!-- 商家销量排行 -->
 <template>
   <div class="com-container">
     <div class="com-chart" ref="rankDom"></div>
@@ -32,15 +32,23 @@ export default {
       chartInstance.value = echarts.init(rankDom.value, null)
       const initOption = {
         title: {
-          text: '商家销量趋势',
+          text: '商家销量排行',
           top: 20,
-          left: 20
+          left: 20,
+          textStyle: {
+            color: '#fff',
+            fontWeight: 'bold'
+          }
         },
         grid: {
           top: '40%',
           right: '5%',
           bottom: '5%',
-          left: '5%'
+          left: '5%',
+          containLabel: true
+        },
+        axisLabel: {
+          color: '#fff'
         },
         tooltip: {},
         xAxis: {
@@ -181,7 +189,8 @@ export default {
     })
 
     return {
-      rankDom
+      rankDom,
+      screenAdapter
     }
   }
 }

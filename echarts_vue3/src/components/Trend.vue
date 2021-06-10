@@ -63,6 +63,9 @@ export default {
             }
           }
         },
+        axisLabel: {
+          color: '#fff'
+        },
         grid: {
           left: '3%',
           top: '34%',
@@ -82,9 +85,11 @@ export default {
           }
         ],
         legend: {
-          left: titleFontSize.value,
           top: '20%',
-          icon: 'circle'
+          icon: 'circle',
+          textStyle: {
+            color: '#fff'
+          }
         }
       }
       unwarp(chartInstance.value).setOption(initOption)
@@ -165,8 +170,7 @@ export default {
           itemHeight: titleFontSize.value / 2,
           itemGap: titleFontSize.value,
           textStyle: {
-            fontSize: titleFontSize.value / 3.2,
-            color: '#fff'
+            fontSize: titleFontSize.value / 2
           }
         }
       }
@@ -208,7 +212,8 @@ export default {
       showTitle,
       titleFontSize,
 
-      handleSelect
+      handleSelect,
+      screenAdapter
     }
   }
 }

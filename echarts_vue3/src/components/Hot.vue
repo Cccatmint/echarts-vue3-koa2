@@ -38,7 +38,11 @@ export default {
         title: {
           text: '热销商品占比',
           left: 20,
-          top: 20
+          top: 20,
+          textStyle: {
+            color: '#fff',
+            fontWeight: 'bold'
+          }
         },
         legend: {
           top: '10%',
@@ -60,6 +64,9 @@ export default {
             return str
           }
         },
+        label: {
+          color: '#fff'
+        },
         series: [
           {
             type: 'pie',
@@ -69,6 +76,7 @@ export default {
               // fontSize: '20%',
               show: false,
               position: 'center'
+
             },
             // 高亮
             emphasis: {
@@ -127,15 +135,23 @@ export default {
           }
         },
         legend: {
+          textStyle: {
+            color: '#fff',
+            fontSize: titleFontSize.value / 2,
+            fontWeight: 'bold'
+          },
+          itemStyle: {
+            borderColor: 'transparent'
+          },
           itemWidth: titleFontSize.value / 2,
-          itemHeight: titleFontSize.value
+          itemHeight: titleFontSize.value / 2
         },
         series: [
           {
             itemStyle: {
               borderRadius: titleFontSize.value / 2,
               borderColor: '#fff',
-              borderWidth: titleFontSize.value / 5
+              borderWidth: titleFontSize.value / 50
             }
           }
         ]
@@ -185,7 +201,8 @@ export default {
       comStyle,
 
       toLeft,
-      toRight
+      toRight,
+      screenAdapter
     }
   }
 }

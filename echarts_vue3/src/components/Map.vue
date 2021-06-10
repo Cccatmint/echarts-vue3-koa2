@@ -72,7 +72,11 @@ export default {
         title: {
           text: '商家分布图',
           left: 20,
-          top: 20
+          top: 20,
+          textStyle: {
+            color: '#fff',
+            fontWeight: 'bold'
+          }
         },
         geo: {
           type: 'map',
@@ -86,7 +90,10 @@ export default {
         legend: {
           left: '5%',
           bottom: '5%',
-          orient: 'vertival'
+          orient: 'vertival',
+          textStyle: {
+            color: '#fff'
+          }
         }
       }
       unwarp(chartInstance.value).setOption(initOption)
@@ -172,7 +179,8 @@ export default {
       mapDom,
       mapData,
 
-      revertMap
+      revertMap,
+      screenAdapter
     }
   }
 }

@@ -23,6 +23,7 @@ export default {
     const chartInstance = ref(null)
     const allData = ref(null) // 服务器返回的原始数
     const totalPage = ref(0)
+    const titleFontSize = ref(0)
     const currentPage = ref(1)
     const timerId = ref(null)
     // method
@@ -33,8 +34,10 @@ export default {
       const initOption = {
         title: {
           text: '商家销售统计',
+          top: 20,
+          left: 20,
           textStyle: {
-            color: '#f00',
+            color: '#fff',
             fontWeight: 'bold'
           }
         },
@@ -43,7 +46,7 @@ export default {
           top: '20%',
           left: '3%',
           right: '6%',
-          bottom: '3%',
+          bottom: '5%',
           containLabel: true,
           backgroundColor: 'rgba(0,0,0,0.2)'
         },
@@ -52,7 +55,7 @@ export default {
           axisPointer: { show: true }
         },
         axisLabel: {
-          color: '#0f0'
+          color: '#fff'
         },
         yAxis: {
           type: 'category'
@@ -148,26 +151,26 @@ export default {
         updateChart()
       }, 3000)
     }
-    const sreenAdapter = () => {
+    const screenAdapter = () => {
       // console.log(sellerDom.value.offsetWidth)
-      const titleFontSize = sellerDom.value.offsetWidth / 100 * 3.6
+      titleFontSize.value = sellerDom.value.offsetWidth / 100 * 3.6
       const adapterOption = {
         title: {
           textStyle: {
-            fontSize: titleFontSize
+            fontSize: titleFontSize.value
           }
         },
         tooltip: {
-          axisPointer: {
-            lineStyle: {
-              with: titleFontSize
-            }
-          }
+          // axisPointer: {
+          //   lineStyle: {
+          //     with: titleFontSize
+          //   }
+          // }
         },
         series: [{
-          barWidth: titleFontSize,
+          barWidth: titleFontSize.value,
           itemStyle: {
-            borderRadius: [0, titleFontSize / 2, titleFontSize / 2, 0]
+            borderRadius: [0, titleFontSize.value / 2, titleFontSize.value / 2, 0]
           }
         }]
       }
@@ -187,21 +190,22 @@ export default {
         value: ''
       })
       startInterval()
-      window.addEventListener('resize', sreenAdapter)
+      window.addEventListener('resize', screenAdapter)
       setTimeout(() => {
-        sreenAdapter()
+        screenAdapter()
       }, 100)
     })
 
     // onBeforeUnmount
     onBeforeUnmount(() => {
       clearInterval(timerId.value)
-      window.removeEventListener('resize', sreenAdapter)
+      window.removeEventListener('resize', screenAdapter)
       // socket 回调函数的取消
       SocketServiceInstance.unRegisterCallBack('sellerData')
     })
     return {
-      sellerDom
+      sellerDom,
+      screenAdapter
     }
   }
 }

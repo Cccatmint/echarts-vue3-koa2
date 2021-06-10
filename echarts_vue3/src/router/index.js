@@ -1,11 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/screenpage'
   },
   {
     path: '/sellerpage',
@@ -39,6 +38,11 @@ const routes = [
     path: '/stockpage',
     name: 'StockPage',
     component: () => import(/* webpackChunkName: "StockPage" */ '../views/StockPage.vue')
+  },
+  {
+    path: '/screenpage',
+    name: 'ScreenPage',
+    component: () => import(/* webpackChunkName: "ScreenPage" */ '../views/ScreenPage.vue')
   }
 ]
 

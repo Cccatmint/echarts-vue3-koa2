@@ -41,7 +41,8 @@ export default {
           left: 20,
           top: 20,
           textStyle: {
-            color: '#f00'
+            color: '#fff',
+            fontWeight: 'bold'
           }
         }
       }
@@ -65,11 +66,11 @@ export default {
         ['66%', '75%']
       ]
       const colorArr = [
-        ['#b6c9f0', '#afb9c8'],
-        ['#ffe5e2', '#ce97b0'],
+        ['#b6c9f0', '#890AE8'],
+        ['#ffe5e2', '#08D167'],
         ['#f5abc9', '#f4a9a8'],
-        ['#fbc6a4', '#e93b81'],
-        ['#f2dac3', '#564a4a']
+        ['#fbc6a4', '#E56705'],
+        ['#f2dac3', '#E80A4B']
       ]
       const start = currentIndex * 5
       const end = (currentIndex + 1) * 5
@@ -135,11 +136,16 @@ export default {
           }
         },
         series: [
-          { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } },
-          { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } },
-          { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } },
-          { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } },
-          { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } }
+          // { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } },
+          // { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } },
+          // { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } },
+          // { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } },
+          // { radius: [titleFontSize.value * 2, titleFontSize.value * 1.125], label: { fontSize: titleFontSize.value / 3 } }
+          { radius: ['20%', '35%'], label: { fontSize: titleFontSize.value / 3 } },
+          { radius: ['20%', '35%'], label: { fontSize: titleFontSize.value / 3 } },
+          { radius: ['20%', '35%'], label: { fontSize: titleFontSize.value / 3 } },
+          { radius: ['20%', '35%'], label: { fontSize: titleFontSize.value / 3 } },
+          { radius: ['20%', '35%'], label: { fontSize: titleFontSize.value / 3 } }
         ]
       }
 
@@ -182,7 +188,8 @@ export default {
     })
 
     return {
-      stockDom
+      stockDom,
+      screenAdapter
     }
   }
 }
