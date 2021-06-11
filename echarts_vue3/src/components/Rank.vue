@@ -82,11 +82,11 @@ export default {
 
     function updateChart () {
       // provinceArr = ['xx省', 'xx省, ... ]
-      const provinceArr = allData.value.map(item => {
+      const provinceArr = allData.value?.map(item => {
         return item.name
       })
       // valueArr = [ 230, 140, ... ]
-      const valueArr = allData.value.map(item => {
+      const valueArr = allData.value?.map(item => {
         return item.value
       })
       const dataOption = {

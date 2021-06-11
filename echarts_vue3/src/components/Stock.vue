@@ -74,8 +74,8 @@ export default {
       ]
       const start = currentIndex * 5
       const end = (currentIndex + 1) * 5
-      const showData = allData.value.slice(start, end)
-      const seriesArr = showData.map((item, index) => {
+      const showData = allData.value?.slice(start, end)
+      const seriesArr = showData?.map((item, index) => {
         return {
           name: item.name,
           center: centerArr[index],

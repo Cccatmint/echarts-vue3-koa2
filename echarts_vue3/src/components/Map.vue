@@ -109,10 +109,10 @@ export default {
     function updateChart () {
       // format network data
       // 若要在地图中显示三点数据， 需要给散点的图标添加一个配置， coordinateSystem: 'geo'
-      const legendArr = allData.value.map(item => {
+      const legendArr = allData.value?.map(item => {
         return item.name
       })
-      const seriesArr = allData.value.map(item => {
+      const seriesArr = allData.value?.map(item => {
         return {
           type: 'effectScatter', // 涟漪动画
           rippleEffect: {

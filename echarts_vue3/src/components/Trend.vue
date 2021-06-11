@@ -122,10 +122,10 @@ export default {
       ]
       const timeArr = allData.value.common.month
       const valueArr = allData.value[choiceType.value].data
-      const legendArr = valueArr.map(item => {
+      const legendArr = valueArr?.map(item => {
         return item.name
       })
-      const seriesArr = valueArr.map((item, index) => {
+      const seriesArr = valueArr?.map((item, index) => {
         return {
           type: 'line',
           name: item.name,

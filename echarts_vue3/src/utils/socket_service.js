@@ -31,7 +31,8 @@ export default class SocketService {
     if (!window.WebSocket) {
       return console.log('您的浏览器不支持WebSocket')
     }
-    this.ws = new WebSocket('ws://localhost:4001')
+    // this.ws = new WebSocket('ws://localhost:4001') // 开发环境
+    this.ws = new WebSocket('ws://1.116.13.77:4001')
 
     // 连接成功的事件
     this.ws.onopen = () => {

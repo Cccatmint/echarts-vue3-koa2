@@ -29,6 +29,7 @@ app.use(cors({
 }))
 app.use(reponse_duration)
 // app.use(reponse_header)
+app.use(require('koa-static')(__dirname + '/public'))
 app.use(reponse_data)
 
 app.use(bodyparser({
@@ -36,7 +37,7 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+
 
 app.use(views(__dirname + '/views', {
   extension: 'pug'

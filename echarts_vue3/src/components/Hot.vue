@@ -105,8 +105,8 @@ export default {
 
     function updateChart () {
       // format data
-      const legendData = allData.value[currentIndex.value].children.map(item => { return item.name })
-      const seriesData = allData.value[currentIndex.value].children.map(item => {
+      const legendData = allData.value[currentIndex.value].children?.map(item => { return item.name })
+      const seriesData = allData.value[currentIndex.value].children?.map(item => {
         return {
           name: item.name,
           value: item.value,

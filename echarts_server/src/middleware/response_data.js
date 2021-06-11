@@ -7,6 +7,10 @@ const { Console } = require('console')
 module.exports = async (ctx, next) => {
   // localhost:3000/api/data/seller
   const url = ctx.request.url // /api/data/seller
+if(!url.includes('/api/data/')) {
+  next()
+} else {
+  
   let filePath = url.replace('/api/data', '') // /seller
   filePath = '../../data' + filePath + '.json' //    ../../data/seller.json
   filePath = path.join(__dirname, filePath) // 文件所处的绝对路径拼接 
@@ -20,4 +24,5 @@ module.exports = async (ctx, next) => {
     ctx.response.body = new ErrorModel(999, '读取文件内容失败')
   }
   next()
+}
 }

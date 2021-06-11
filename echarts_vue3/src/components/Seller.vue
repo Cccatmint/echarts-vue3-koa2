@@ -125,9 +125,9 @@ export default {
     function updateChart () {
       const start = (currentPage.value - 1) * 5
       const end = currentPage.value * 5
-      const showData = allData.value.slice(start, end)
-      const sellerNames = showData.map(item => item.name)
-      const sellerValues = showData.map(item => item.value)
+      const showData = allData.value?.slice(start, end)
+      const sellerNames = showData?.map(item => item.name)
+      const sellerValues = showData?.map(item => item.value)
       const dataoption = {
         yAxis: {
           data: sellerNames
